@@ -35,17 +35,34 @@ double P3(const int N, const int i, double t) // на підйомі зрост�
         return P3(N, i + 1, t);
 }
 
-    double P4(const int N, const int i, double t) {//для контролю правильності рекурсивних способів
+    double P4(const int N, const int i, double t) {
     t *= (i + 1.0 / (i * i)) / pow(1.0 + exp(i), 1.0 / i);
     if (i <= N)
         return t;
     return P4(N, i - 1, t);
 }
 
+int f(int N, int i, int t, int level, int &depth)
+{
+    if (level > depth)
+        depth = level;
+
+    cout << "level = " << level << endl;
+    if (level == N)
+        return depth;
+    return f(N, i, t, level + 3, depth);
+}
+
+
 int main()
 {
     int N, i;
     cout << "N = "; cin >> N;
+    
+int depth = 0;
+    f(15, 0, 0, 3, depth);
+    cout << "depth: " << depth << endl;
+
     
     cout << fixed << setprecision(10);
     cout << "(iter) P0 = " << P0 (N) << endl;
