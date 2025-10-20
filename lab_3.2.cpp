@@ -12,29 +12,40 @@ int main() {
   double c;
   double x;
   double F;
-  double F1;
-  double F2;
-  double F3;
-  cout << a << " a = ";
+  
+  cout << " a = ";
   cin >> a;
-cout << b << " b = ";
+cout << " b = ";
   cin >> b;
-cout << c << " c = ";
+cout << " c = ";
 cin >> c;
-cout << c << " c = ";
-cin >> c;
-cout << x << " x = ";
+cout << "x =";
 cin >> x;
+// 1 спосіб
 if (x + c < 0 && a != 0)
-  F1 = -a * x * x - b;
+  F = -a * x * x - b;
 else if (x + c > 0 && a == 0)
-  F2 = (x - a) / (x - c);
+  F = (x - a) / (x - c);
 else
-  F3 = x / c + c / x;
-cout << " F1 = " << F1 << endl;
-cout << " F2 = " << F2 << endl;
-cout << " F3 = " << F3 << endl;
+  F = x / c + c / x;
+
+cout << " F = " << F << endl;
+
+// 2 спосіб
+if (x + c < 0 && a != 0) {
+  F = -a * x * x - b;
+ }
+
+ if (x + c > 0 && a == 0) {
+   F = (x - a) / (x - c);
+   }
+
+   if (!(x + c < 0 && a != 0) && !(x + c > 0 && a == 0)) {
+       F = x / c + c / x;
+}
+
 cout << " F = " << F << endl;
 cin.get();
       return 0;
 }
+
