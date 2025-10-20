@@ -30,7 +30,7 @@ double P3(const int N, const int i, double t) // на підйомі зрост�
 {
     t *= (i + 1.0 / (i * i)) / pow(1.0 + exp(i), 1.0 / i);
     if (i >= 10)
-      return t;
+      return P0;
     else
         return P3(N, i + 1, t);
 }
