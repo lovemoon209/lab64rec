@@ -1,31 +1,38 @@
 #include <iostream>
+#include <iomanip>
+#include <ctime>
 using namespace std;
 
-int s(int mas[], const int i);
+const int N = 25;
 
-int main(){
-const int i = 25;
-int p[i] = {15, .. , 94 };
-for (int i=0; i<l; i++){
-    cout << "p[" << i << "] = ";
-    cin >> p[i];
+void Create(int* p, int size, int Low, int High, int i = 0) {
+   for(int i = 0; i < size; i++) 
+    p[i] = Low + rand() % (High - Low + 1);
 }
 
-for (int i=0; i<l; i++)
-cout << p[i] << " ";
-cout << endl;
-return 0;
-
-int s(int mas[], const int i){
-    int s=0;
-    for (int i=0; i<l; i++);
-    s += mas[i]
+void Print(int* p, int size, int i = 0) {
+   for(int i = 0; i < size; i++) 
+    cout << setw(4) << p[i];
 }
 
-if (!(p[i]%2=0 && i%13=0)){
-    s += p[i];
-    k++;
-    p[i]=0;
+void Process(int* p, int size, int i, int& s, int& k) {
+    for (int i = 0; (!(p[i] % 2 == 0 && i % 13 == 0)) && i < size; i++) 
+        s += p[i];
+        k++;
+        p[i] = 0;
 }
-return s;
+
+int main() {
+    srand(time(0));
+    int p[N];
+    int Low = 15, High = 94;
+    Create(p, N, Low, High);
+    cout << "початковий масив: ";
+    Print(p, N);
+    int sum = 0, k = 0;
+    Process(p, N, 0, sum, k);
+    cout << "\ncума " << sum << endl;
+    cout << "модифікований масив: ";
+    Print(p, N);
+    return 0;
 }
