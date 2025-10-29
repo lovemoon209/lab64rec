@@ -1,0 +1,84 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int countzeros(double* a, int n, int i = 0) {
+    return (i == n) ? 0 : (a[i] == 0) + countzeros(a, n, i + 1);
+}
+
+int findminindex(double* a, int n, int i = 1, int minIndex = 0) {
+    return (i == n) ? minIndex : findminindex(a, n, i + 1, (a[i] < a[minIndex]) ? i : minIndex);
+}
+
+double sumaftermin(double* a, int n, int minIndex, int i = 0) {
+    return (i >= n) ? 0 : ((i > minIndex) ? a[i] : 0) + sumaftermin(a, n, minIndex, i + 1);
+}
+
+void sortoddnes(double* a, int n, int i = 0, int j = 0) {
+    if (i >= n - 1) return;
+    if (j < n - i - 1) {
+        bool odd1 = int(a[j]) % 2, odd2 = int(a[j + 1]) % 2;
+        if (odd1 && odd2 && fabs(a[j]) > fabs(a[j + 1])) swap(a[j], a[j + 1]);
+        sortoddnes(a, n, i, j + 1);
+    } else sortoddnes(a, n, i + 1, 0);
+}
+
+void print(double* a, int n, int i = 0) {
+    if (i == n) return;
+    cout << a[i] << " ";
+    print(a, n, i + 1);
+}
+
+bool arraysequal(double* a, double* b, int n, double eps = 1e-9) {
+    for (int i = 0; i < n; i++)
+        if (fabs(a[i] - b[i]) > eps) return false;
+    return true;
+}
+
+int main() {
+    int n; 
+    cout << "n = "; 
+    cin >> n;
+    double* a = new double[n];
+    for (int i = 0; i < n; i++) cin >> a[i];
+
+    double* auxsort = new double[n];
+    for (int i = 0; i < n; i++) auxsort[i] = a[i];
+
+    int minidx = findminindex(auxsort, n);
+    double auxsum = sumaftermin(auxsort, n, minidx);
+    int auxzero = countzeros(auxsort, n);
+    sortoddnes(auxsort, n);
+
+    cout << "\n=== Обчислення програмою ===\n";
+    cout << "Масив після сортування: ";
+    print(auxsort, n);
+    cout << "\nСума після мінімального: " << auxsum;
+    cout << "\nКількість нулів: " << auxzero << endl;
+
+    cout << "\n=== результати ===\n";
+    double* yourarray = new double[n];
+    cout << "Введи масив після сортування:\n";
+    for (int i = 0; i < n; i++) cin >> yourarray[i];
+
+    double yoursum, yourzero;
+    cout << "Введи суму після мінімального: ";
+    cin >> yoursum;
+    cout << "Введи кількість нулів: ";
+    cin >> yourzero;
+
+    cout << "\n=== Перевірка ===\n";
+
+    bool oksort = arraysequal(auxsort, yourarray, n);
+    bool oksum = fabs(auxsum - yoursum) < 1e-9;
+    bool okzero = (auxzero == (int)yourzero);
+
+    cout << "Сортування: " << (oksort ? "Тест пройдено" : "Тест провалено") << endl;
+    cout << "Сума після мінімального: " << (oksum ? "Тест пройдено" : "Тест провалено") << endl;
+    cout << "Кількість нулів: " << (okzero ? "Тест пройдено" : "Тест провалено") << endl;
+
+    delete[] a;
+    delete[] auxsort;
+    delete[] yourarray;
+    return 0;
+}
